@@ -1,6 +1,6 @@
 <card-block>
   <div id="container">
-		<div style="background:{ block.backgroundColor }">Hello</div>
+		<div class="box" style="background-color:{ block };"></div>
   </div>
 
 
@@ -13,9 +13,9 @@
 
   <!-- CSS style -->
   <style>
-    div {
+    #container {
 	    width: 30%;
-      background: purple;
+      /* background: purple; */
       padding-bottom: 30%;
       float: left;
       margin: 1.66%;
@@ -23,6 +23,10 @@
       transition: background-color 0.6s;
       -webkit-transition: background-color 0.6s;
       -moz-transition: background-color 0.6s;
+    }
+    .box {
+      width: 50px;
+      height: 50px;
     }
   </style>
 </card-block>

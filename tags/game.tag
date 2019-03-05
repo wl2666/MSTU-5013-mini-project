@@ -27,14 +27,13 @@
   <!-- script -->
   <script>
     let tag = this;
-    console.log(this)
 
     this.rgbDisplay = "RGB";
     this.colorBlocks = [];
 
     //make the random colors into an array
-    function generateRandomColors() {
-
+    generateRandomColors() {
+      console.log(this);
   	  //push random colors into the array
   	  for (var i = 0; i < 6; i++) {
   		  this.colorBlocks.push(randomColors());
@@ -52,7 +51,7 @@
   	  //blue
   	  var b = Math.floor(Math.random() * 256);
       //return the object {backgroundColor: rgb(r, g, b)}
-  	  return "{backgroundColor: rgb(" + r + ", " + g + ", " + b + ")}";
+  	  return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 
   </script>
@@ -64,9 +63,9 @@
   	  margin: 0px;
   	  font-family: times;
     }
-    #container-fluid {
+    .container-fluid {
   	  margin: 20px auto;
-      max-width: 600px;
+      width: 100%;
     }
     h1 {
   	  color: white;
