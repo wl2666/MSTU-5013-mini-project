@@ -10,7 +10,7 @@
     </div>
     <div id="stripe" class="form-row">
       <div class="form-group">
-        <button type="button" onclick={ generateRandomColors }>NEW COLORS</button>
+        <button type="button" onclick={ generateRandomColors } disabled={ buttonClicked }>NEW COLORS</button>
         <select>
           <option value="" disabled selected>Select Level</option>
   				<option value="1">Easy Mode</option>
@@ -20,7 +20,9 @@
       </div>
     </div>
     <div class="row">
-      <card-block each={ block, i in colorBlocks }></card-block>
+      <div class="col-6">
+        <color-block each={ block, i in colorBlocks }></color-block>
+      </div>
     </div>
   </div>
 
@@ -38,6 +40,8 @@
   	  for (var i = 0; i < 6; i++) {
   		  this.colorBlocks.push(randomColors());
   	  };
+      //change the state of button
+      this.buttonClicked = true;
   	  //return the color array
   	  return this.colorBlocks;
     }
@@ -50,7 +54,7 @@
   	  var g = Math.floor(Math.random() * 256);
   	  //blue
   	  var b = Math.floor(Math.random() * 256);
-      //return the object {backgroundColor: rgb(r, g, b)}
+      //return the rgb(r, g, b) color
   	  return "rgb(" + r + ", " + g + ", " + b + ")";
     }
 
@@ -111,6 +115,12 @@
     select {
       margin: auto 100px;
       outline: none;
+    }
+    .row {
+      text-align: center;
+    }
+    color-block {
+      display:inline-block;
     }
   </style>
 </game>
