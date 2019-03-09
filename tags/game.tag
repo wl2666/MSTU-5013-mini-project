@@ -10,8 +10,8 @@
     </div>
     <div id="stripe" class="form-row">
       <div class="form-group">
-        <button type="button" onclick={ generateRandomColors } disabled={ buttonClicked }>NEW COLORS</button>
-        <select>
+        <button type="button" onclick={ generateRandomColors } disabled={ buttonClicked || !this.level }>NEW COLORS</button>
+        <select onchange={ setLevel }>
           <option value="" disabled selected>Select Level</option>
   				<option value="1">Easy Mode</option>
   				<option value="2">Medium Mode</option>
@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col">
         <color-block each={ block, i in colorBlocks }></color-block>
       </div>
     </div>
@@ -29,33 +29,116 @@
   <!-- script -->
   <script>
     let tag = this;
+    console.log(this);
 
     this.rgbDisplay = "RGB";
     this.colorBlocks = [];
+    this.level = "";
 
-    //make the random colors into an array
-    generateRandomColors() {
-      console.log(this);
-  	  //push random colors into the array
-  	  for (var i = 0; i < 6; i++) {
-  		  this.colorBlocks.push(randomColors());
-  	  };
-      //change the state of button
-      this.buttonClicked = true;
-  	  //return the color array
-  	  return this.colorBlocks;
+    // to get color objects
+    randomColors(numColors) {
+      let colors = [];
+      let rStart;
+      let gStart;
+      let bStart;
+      let gradRange = 256 / (numColors - 1);
+
+      //for level 1
+      if (this.level == 1) {
+        let index = [0, 1, 2];
+        let  j = Math.floor(Math.random() * 3);
+
+        if (index[j] == 0) {
+          rStart = 0;
+          gStart = Math.floor(Math.random() * 256);
+          bStart = gStart;
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart + (gradRange * i), g: gStart, b: bStart
+          });
+        }
+
+        } else if (index[j] == 1) {
+          rStart = Math.floor(Math.random() * 256);
+          gStart = 0;
+          bStart = rStart;
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart, g: gStart + (gradRange * i), b: bStart
+          });
+        }
+        } else if (index[j] == 2) {
+          rStart = Math.floor(Math.random() * 256);
+          gStart = rStart;
+          bStart = 0;
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart, g: gStart, b: bStart + (gradRange * i)
+          });
+        }
+        }
+      }
+
+      //for level 2
+      if (this.level == 2) {
+        let index = [0, 1, 2];
+        let  j = Math.floor(Math.random() * 3);
+
+        if (index[j] == 0) {
+          rStart = 0;
+          gStart = 0;
+          bStart = Math.floor(Math.random() * 256);
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart + (gradRange * i), g: gStart + (gradRange * i), b: bStart
+          });
+        }
+
+        } else if (index[j] == 1) {
+          rStart = 0;
+          gStart = Math.floor(Math.random() * 256);
+          bStart = 0;
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart + (gradRange * i), g: gStart, b: bStart + (gradRange * i)
+          });
+        }
+        } else if (index[j] == 2) {
+          rStart = Math.floor(Math.random() * 256);
+          gStart = 0;
+          bStart = 0;
+
+          for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart, g: gStart + (gradRange * i), b: bStart + (gradRange * i)
+          });
+        }
+        }
+      }
+
+      //for level 3
+      if (this.level == 3) {
+        rStart = Math.floor(Math.random() * 256);
+        gStart = Math.floor(Math.random() * 256);
+        bStart = Math.floor(Math.random() * 256);
+
+        for (var i = 0; i < numColors; i++) {
+          colors.push({r: rStart, g: gStart, b: bStart});
+        }
+        }
+
+      return colors;
     }
 
-    //to get random colors
-    function randomColors() {
-  	  //red
-  	  var r = Math.floor(Math.random() * 256);
-  	  //green
-  	  var g = Math.floor(Math.random() * 256);
-  	  //blue
-  	  var b = Math.floor(Math.random() * 256);
-      //return the rgb(r, g, b) color
-  	  return "rgb(" + r + ", " + g + ", " + b + ")";
+    generateRandomColors(colorArr) {
+      colorArr = this.randomColors(6);
+      this.colorBlocks = _.shuffle(colorArr.map(color => "rgb(" + color.r + ", " + color.g + ", " + color.b + ")"));
+      return this.colorBlocks;
+    }
+
+
+    //change levels
+    setLevel(event) {
+      this.level = Number(event.target.value);
     }
 
   </script>
@@ -118,6 +201,10 @@
     }
     .row {
       text-align: center;
+    }
+    .col {
+      max-width: 600px;
+      margin: 20px auto;
     }
     color-block {
       display:inline-block;

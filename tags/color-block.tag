@@ -3,7 +3,6 @@
   <div class="box" style="background-color:{ block };"></div>
 
 
-
   <!-- script -->
   <script>
     let tag = this;
