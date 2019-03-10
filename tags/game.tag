@@ -10,7 +10,8 @@
     </div>
 
     <div id="stripe" class="row">
-      <button type="button" onclick={ generateRandomColors } disabled={ !this.level }>NEW COLORS</button>
+      <button type="button" onclick={ generateRandomColors } disabled={ !this.level }>{ buttonText }</button>
+      <span>{ message }</span>
       <select onchange={ setLevel }>
         <option value="" disabled selected>Select Level</option>
   			<option value="1">Easy Mode</option>
@@ -33,45 +34,9 @@
 
     this.rgbDisplay = "RGB";
     this.colorBlocks = [];
+    this.buttonText = "NEW COLORS";
     this.level = "";
-    this.pickedColor = "steelblue"
-    this.message = "NEW COLORS"
-
-    var that = this;
-    // observable listening for "messageChange" event.
-    observable.on('messageChange', function(){
-        that.update();
-    });
-
-    selectBlock(event) {
-      this.message = "test"
-      let backgroundColor = event.target.style["background-color"]
-      if (backgroundColor.toUpperCase()==this.rgbDisplay.toUpperCase()) {
-          this.message="Correct! Play Again?"
-          this.pickedColor = backgroundColor
-          for(var i = 0; i < this.colorBlocks.length; i++){
-          		//change each color to match given color
-          		this.colorBlocks[i] = backgroundColor;
-        	}
-
-          observable.trigger('messageChange');
-
-          //resetButton.textContent = "Play Again?"
-          //changeColors(clickedColor);
-          //h1.style.background = clickedColor;
-      } else {
-          event.target.style["background-color"] = 'white'
-          this.message = "Try Again!"
-          observable.trigger('messageChange');
-
-          //this.style.background = "#232323";
-          //messageDisplay.textContent = "Try Again"
-      }
-      console.log(this.message)
-      console.log(backgroundColor.toUpperCase() + ' -- ' + this.rgbDisplay.toUpperCase())
-
-
-    }
+    this.message = "";
 
 
     //change levels
@@ -85,7 +50,6 @@
       let rStart;
       let gStart;
       let bStart;
-
       let gradRange = 255 / (numColors - 1);
       let index = [0, 1, 2];
       let  j = Math.floor(Math.random() * 3);
@@ -171,15 +135,41 @@
       this.colorBlocks = _.shuffle(colorArr.map(color => "RGB(" + color.r + ", " + color.g + ", " + color.b + ")"));
       this.pickColor()
       this.pickedColor = "steelblue"
-      this.message = "NEW COLORS"
       return this.colorBlocks;
     }
 
-
+    //set one color as selected color
     pickColor(){
-    	var random = Math.floor(Math.random() * this.colorBlocks.length);
+      var random = Math.floor(Math.random() * this.colorBlocks.length);
       this.rgbDisplay = this.colorBlocks[random]
-    	return this.colorBlocks[random];
+      return this.colorBlocks[random];
+    }
+
+    // observable listening for "messageChange" event.
+    observable.on('messageChange', function(){
+        tag.update();
+    });
+
+    selectBlock(event) {
+      let backgroundColor = event.target.style["background-color"]
+      if (backgroundColor.toUpperCase() == this.rgbDisplay.toUpperCase()) {
+          this.message="Correct!"
+          this.pickedColor = backgroundColor
+          this.buttonText = "PLAY AGAIN?";
+          //change each color to match given color
+          for(var i = 0; i < this.colorBlocks.length; i++){
+          		this.colorBlocks[i] = backgroundColor;
+        	}
+
+          observable.trigger('messageChange');
+
+      } else {
+          event.target.style["background-color"] = 'white'
+          this.message = "Try Again!"
+          observable.trigger('messageChange');
+      }
+      // console.log(this.message)
+      // console.log(backgroundColor.toUpperCase() + ' -- ' + this.rgbDisplay.toUpperCase())
     }
 
   </script>
@@ -193,7 +183,6 @@
     .container-fluid {
   	  margin: 20px auto;
       width: 100%;
-      /* background-color: #232323; */
     }
     h1 {
   	  color: white;
