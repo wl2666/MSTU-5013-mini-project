@@ -11,3 +11,6 @@ feedback: If the user chooses the wrong color block, a feedback will show up as 
 
 ###Content Requirement
 The content of RGB color block will change according to the game difficulty level. In the easy mode, the only difference between different color blocks is one dimension of R,G,B. In the intermediate mode, two dimensions of R,G,B are different among different color blocks. In the hard mode, all three R,G,B dimensions are different among different color blocks. It worths noting that these changes are not made manually, they are made randomly by the system.
+
+## Structure and Skeleton
+https://realtimeboard.com/welcomeonboard/G8tUY43wd2i4riODJtGLFSCWf0fF9huhjzYe7p87y8wQbVXDVauE6Xs7gTXw0HfY
