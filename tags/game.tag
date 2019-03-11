@@ -25,6 +25,18 @@
         <color-block each={ block, i in colorBlocks } onclick={ selectBlock }></color-block>
       </div>
     </div>
+    <div class="card" show={ wrong }>
+      <div class="card-header">
+        <h1>Feedback</h1>
+      </div>
+      <div class="card-body">
+        <feedback></feedback>
+      </div>
+      <div class="card-footer">
+      </div>
+
+    </div>
+
   </div>
 
   <!-- script -->
@@ -37,6 +49,7 @@
     this.buttonText = "NEW COLORS";
     this.level = "";
     this.message = "";
+    this.wrong = "";
 
 
     //change levels
@@ -135,6 +148,7 @@
       this.colorBlocks = _.shuffle(colorArr.map(color => "RGB(" + color.r + ", " + color.g + ", " + color.b + ")"));
       this.pickColor()
       this.pickedColor = "steelblue"
+      this.message = "";
       return this.colorBlocks;
     }
 
@@ -166,6 +180,7 @@
       } else {
           event.target.style["background-color"] = 'white'
           this.message = "Try Again!"
+          this.wrong = true;
           observable.trigger('messageChange');
       }
       // console.log(this.message)
