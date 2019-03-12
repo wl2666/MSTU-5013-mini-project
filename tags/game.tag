@@ -149,6 +149,7 @@
       this.pickColor()
       this.pickedColor = "steelblue"
       this.message = "";
+      this.wrong = false;
       return this.colorBlocks;
     }
 
